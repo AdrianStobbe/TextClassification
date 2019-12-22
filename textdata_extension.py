@@ -4,14 +4,16 @@ from tensorflow_examples.lite.model_customization.core.model_export_format impor
 import tensorflow_examples.lite.model_customization.core.task.text_classifier as text_classifier
 
 @classmethod
-def from_panda(cls, df, class_labels=None, num_classes=2, shuffle=True):
+def from_panda(cls, df, pd_label, class_labels=None, num_classes=2, shuffle=True):
     """Text analysis for text classification load text with labels.
 
     Assume the text data of the same label are in the same subdirectory. each
     file is one text.
 
     Args:
-      filename: Name of the file.
+      cls: ignore this (class is passed)
+      df: panda object
+      pd_label: list of panda cololumn of text (first) and label (second): ['review','sentiment']
       class_labels: Class labels that should be considered. Name of the
         subdirectory not in `class_labels` will be ignored. If None, all the
         subdirectories will be considered.
@@ -32,8 +34,8 @@ def from_panda(cls, df, class_labels=None, num_classes=2, shuffle=True):
       label_names = ['0','1']
     ## neccesary?
     ## new code
-    text_ds = tf.data.Dataset.from_tensor_slices( tf.cast(df['review'].values, tf.string) )
-    label_ds = tf.data.Dataset.from_tensor_slices( tf.cast(df['sentiment'].values, tf.int64) )
+    text_ds = tf.data.Dataset.from_tensor_slices( tf.cast(df[pd_label[0]].values, tf.string) )
+    label_ds = tf.data.Dataset.from_tensor_slices( tf.cast(df[pd_label[1]].values, tf.int64) )
     # print(type(text_ds), type(label_ds))
     text_label_ds = tf.data.Dataset.zip( (text_ds, label_ds) )
     #text_label_ds = tf.data.Dataset.from_tensor_slices( (tf.cast(df['review'].values, tf.string), tf.cast(df['rating'].values, tf.int32)) )
