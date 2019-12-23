@@ -14,3 +14,7 @@ You can download the dataset from [Kaggle](https://www.kaggle.com/bittlingmayer/
 - compare results to IMDb movie dataset
 - compare different hyperparameter settings
 - compare effect of cleaning procedure
+
+
+
+-> deploy best model, build app
